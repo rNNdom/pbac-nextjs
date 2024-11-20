@@ -1,0 +1,14 @@
+{
+  "policies": [
+    {
+      "name": "Allow Access to Career",
+      "conditions": {
+        "user_enrolled_in_program": true,
+        "previous_career_approved": true
+      },
+      "actions": ["view"],
+      "resources": ["career"],
+      "description": "Allows the user to view a career if they have completed the previous career in the program."
+    }
+  ]
+}
