@@ -2,8 +2,8 @@
   "policies": [
     {
       "name": "Allow Access to Career",
+      "type": "career_progress",
       "conditions": {
-        "type": "career_progress",
         "user_enrolled_in_program": true,
         "previous_career_approved": true
       },

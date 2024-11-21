@@ -24,18 +24,12 @@ export interface Career {
   order: number
 }
 
-export type BasePolicyCondition = {
-  type: string
-}
-
-export type CareerProgressCondition = BasePolicyCondition & {
-  type: 'career_progress'
+export type CareerProgressCondition = {
   user_enrolled_in_program: boolean
   previous_career_approved: boolean
 }
 
-export type CourseAccessCondition = BasePolicyCondition & {
-  type: 'course_access'
+export type CourseAccessCondition = {
   has_required_role: boolean
   has_paid_subscription: boolean
 }
@@ -44,6 +38,7 @@ export type PolicyCondition = CareerProgressCondition | CourseAccessCondition
 
 export interface Policy {
   name: string
+  type: 'career_progress' | 'course_access'
   conditions: PolicyCondition
   actions: string[]
   resources: string[]
@@ -122,14 +117,14 @@ export const userProgress: UserProgress[] = [
     userId: '1',
     careerId: '2', // data specialist
     programId: '1',
-    state: ProgressState.COMPLETED
+    state: ProgressState.IN_PROGRESS
   },
   {
     id: '3',
     userId: '2',
-    careerId: '1', // carrera 1
+    careerId: '3', // carrera 1
     programId: '2',
-    state: ProgressState.COMPLETED
+    state: ProgressState.IN_PROGRESS
   }
 ]
 
@@ -145,8 +140,9 @@ export const getCurrentCareer = (careerId: string): Career | undefined => {
   return mockCareers.find((c) => c.id === careerId)
 }
 
+//Get the order 1 of the same program career
 export const getPreviousCareer = (careerId: string): Career | undefined => {
   const currentCareer = getCurrentCareer(careerId)
   if (!currentCareer) return undefined
-  return mockCareers.find((c) => c.order === currentCareer.order - 1)
+  return mockCareers.find((c) => c.order === currentCareer.order - 1 && c.programId === currentCareer.programId)
 }

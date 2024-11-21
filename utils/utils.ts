@@ -5,21 +5,20 @@ import { CareerProgressCondition, getCurrentCareer, getPreviousCareer, Policy, P
 //3. Third we need to check if the user has the permission to view the career by checking the policies.json file
 
 export const checkPermission = (userData: UserProgress[], careerId: string, policy: Policy, programId: string): boolean => {
-  const { conditions } = policy
-  // Type guard to ensure we're handling the correct policy type
-  if (conditions.type !== 'career_progress') {
+  // Early return if not a career progress policy
+  if (policy.type !== 'career_progress') {
     return false // or handle other policy types
   }
 
+  const conditions = policy.conditions as CareerProgressCondition
   const isUserEnrolledInProgram = userData.some((up) => up.programId === programId)
   const currentCareer = getCurrentCareer(careerId)
   if (!currentCareer) return false
 
-  // Create validation payload for career progress
+  // Create validation payload
   const validationPayload: CareerProgressCondition = {
-    type: 'career_progress',
     user_enrolled_in_program: isUserEnrolledInProgram,
-    previous_career_approved: false // Default value
+    previous_career_approved: false
   }
 
   // First career (order 1) is accessible if user is enrolled
@@ -35,9 +34,6 @@ export const checkPermission = (userData: UserProgress[], careerId: string, poli
 
   validationPayload.previous_career_approved = isPreviousCareerCompleted
 
-  // Exclude 'type' from the comparison because it doesn't has an use in the comparison
-  const { type: conditionsType, ...conditionsToCheck } = conditions
-  const { type: validationType, ...payloadToCheck } = validationPayload
-
-  return Object.entries(conditionsToCheck).every(([key, value]) => payloadToCheck[key as keyof typeof payloadToCheck] === value)
+  // Simple object comparison
+  return Object.entries(conditions).every(([key, value]) => validationPayload[key as keyof CareerProgressCondition] === value)
 }

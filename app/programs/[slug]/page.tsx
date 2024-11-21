@@ -10,7 +10,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
   if (!program) {
     return <div>Program not found</div> // Handle invalid program IDs
   }
-  const userProgress = getUserProgressOnProgram(users[0].id, program.id)
+  const userProgress = getUserProgressOnProgram(users[1].id, program.id)
 
   const allowed = (careerId: string) => policies.policies.some((policy) => checkPermission(userProgress, careerId, policy as Policy, program.id))
 
@@ -25,6 +25,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
               <div key={career.id} className='flex flex-col gap-2 border-2 border-gray-300 rounded-md p-4 bg-white h-full'>
                 <span className='flex-grow'>
                   <h3 className='text-xl font-bold'>{career.name}</h3>
+                  <p>Id: {career.id}</p>
                   <p>Order: {career.order}</p>
                 </span>
                 <span>
