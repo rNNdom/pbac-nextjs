@@ -117,7 +117,7 @@ export const userProgress: UserProgress[] = [
     userId: '1',
     careerId: '2', // data specialist
     programId: '1',
-    state: ProgressState.IN_PROGRESS
+    state: ProgressState.COMPLETED
   },
   {
     id: '3',
@@ -125,6 +125,13 @@ export const userProgress: UserProgress[] = [
     careerId: '3', // carrera 1
     programId: '2',
     state: ProgressState.IN_PROGRESS
+  },
+  {
+    id: '4',
+    userId: '1',
+    careerId: '3', // carrera 1
+    programId: '2',
+    state: ProgressState.COMPLETED
   }
 ]
 

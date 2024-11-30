@@ -1,7 +1,7 @@
 import Program from '@/components/Program'
 import { mockPrograms, users } from '@/utils/api'
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className='flex flex-col gap-4 justify-center items-center min-h-screen w-full'>
       <h1>Hello {users[0].name}</h1>

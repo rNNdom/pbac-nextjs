@@ -10,7 +10,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
   if (!program) {
     return <div>Program not found</div> // Handle invalid program IDs
   }
-  const userProgress = getUserProgressOnProgram(users[1].id, program.id)
+  const userProgress = getUserProgressOnProgram(users[0].id, program.id)
 
   const allowed = (careerId: string) => policies.policies.some((policy) => checkPermission(userProgress, careerId, policy as Policy, program.id))
 
